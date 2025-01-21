@@ -86,5 +86,47 @@
         }
         ?>
 
+        <h2>File Handling</h2>
+
+        <?php
+        $file = "demo.txt";
+
+        $fileHandling = fopen($file, "w");
+        fwrite($fileHandling, "Hello, I am Aman!!!");
+        fclose($fileHandling);
+
+        echo "File created and written successfully!!";
+
+        $fileHandling = fopen($file, "r");
+        $fileContent = fread($fileHandling, filesize($file));
+        fclose($fileHandling);
+
+        echo "file content: $fileContent<br>";
+        ?>
+
+        <h2>Ajax</h2>
+
+        <button onclick="fetchData()">Fetch Data</button>
+        <div id="result"></div>
+
+        <script>
+            function fetchData() {
+                const xhr =  new XMLHttpRequest();
+                xhr.open('GET', "?ajax=1", true);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        document.getElementById("result").innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send();
+            }
+        </script>
+
+        <?php
+        if(isset($_GET['ajax']) && $_GET['ajax'] == 1) {
+            echo "Data Fetched!!";
+            exit;
+        }
+        ?>
     </body>
 </html>
